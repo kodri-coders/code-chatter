@@ -256,6 +256,15 @@ export class StreamingMessageParser {
       }
 
       (actionAttributes as FileAction).filePath = filePath;
+    } else if (actionType === 'patch') {
+      const filePath = this.#extractAttribute(actionTag, 'filePath') as string;
+
+      if (!filePath) {
+        logger.debug('File path not specified');
+      }
+
+      (actionAttributes as FileAction).filePath = filePath;
+      console.log({ actionAttributes })
     } else if (actionType !== 'shell') {
       logger.warn(`Unknown action type '${actionType}'`);
     }

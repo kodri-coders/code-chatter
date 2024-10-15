@@ -5,6 +5,7 @@ import type { BoltAction } from '~/types/actions';
 import { createScopedLogger } from '~/utils/logger';
 import { unreachable } from '~/utils/unreachable';
 import type { ActionCallbackData } from './message-parser';
+import { applyPatch } from 'diff';
 
 const logger = createScopedLogger('ActionRunner');
 
@@ -110,6 +111,10 @@ export class ActionRunner {
           await this.#runFileAction(action);
           break;
         }
+        case 'patch': {
+          await this.#runPatchAction(action);
+          break;
+        }
       }
 
       this.#updateAction(actionId, { status: action.abortSignal.aborted ? 'aborted' : 'complete' });
@@ -178,6 +183,34 @@ export class ActionRunner {
     }
   }
 
+  async #runPatchAction(action: ActionState) {
+    if (action.type !== 'patch') {
+      unreachable('Expected patch action');
+    }
+
+    const webcontainer = await this.#webcontainer;
+
+    console.log(await webcontainer.fs.readdir('/'))
+    console.log( action.filePath);
+
+    try {
+      const content = await webcontainer.fs.readFile(action.filePath, 'utf-8');
+
+      const newContent = applyPatch(content, action.content, {
+        fuzzFactor: 0.4,
+      }) as string;
+      console.log(newContent, action.content);
+
+      if (typeof newContent !== 'string' || newContent === content) {
+        logger.error('Failed to patch file\n\n', 'patch failed');
+      }
+
+      await webcontainer.fs.writeFile(action.filePath, newContent);
+      logger.debug(`Patch written ${action.filePath}`);
+    } catch (error) {
+      logger.error('Failed to patch file\n\n', error);
+    }
+  }
   #updateAction(id: string, newState: ActionStateUpdate) {
     const actions = this.actions.get();
 

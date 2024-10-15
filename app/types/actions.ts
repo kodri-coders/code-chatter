@@ -1,11 +1,11 @@
-export type ActionType = 'file' | 'shell';
+export type ActionType = 'file' | 'patch' | 'shell';
 
 export interface BaseAction {
   content: string;
 }
 
 export interface FileAction extends BaseAction {
-  type: 'file';
+  type: 'file' | 'patch';
   filePath: string;
 }
 
