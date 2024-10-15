@@ -18,6 +18,7 @@ tbh
 - [ ] Highlight changes in code
 - [ ] Commit each change to git
 - [ ] Reiterate on system prompt to minimize context
+- [ ] Share your work via a URL or file
 
 ## Featurs
 - **Full-Stack in the Browser**: Bolt.new integrates cutting-edge AI models with an in-browser development environment powered by **StackBlitz’s WebContainers**. This allows you to:
