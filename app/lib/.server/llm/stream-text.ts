@@ -23,7 +23,7 @@ export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'>;
 
 export function streamText(messages: Messages, env: Env, options?: StreamingOptions) {
   const provider = env.PROVIDER || 'anthropic';
-  const modelName = env.MODEL_NAME || 'default-model';
+  const modelName = env.MODEL_NAME || 'claude-3-5-sonnet-20240620';
   const factory = getModelFactory(provider);
 
   const model = factory.createModel(getAPIKey(env), modelName);
