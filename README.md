@@ -20,7 +20,7 @@ tbh
 - [ ] Reiterate on system prompt to minimize context
 - [ ] Share your work via a URL or file
 
-## Featurs
+## Features
 - **Full-Stack in the Browser**: Bolt.new integrates cutting-edge AI models with an in-browser development environment powered by **StackBlitz’s WebContainers**. This allows you to:
   - Install and run npm tools and libraries (like Vite, Next.js, and more)
   - Run Node.js servers
