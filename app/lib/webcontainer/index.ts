@@ -1,5 +1,6 @@
 import { WebContainer } from '@webcontainer/api';
 import { WORK_DIR_NAME } from '~/utils/constants';
+import { DockerContainer } from './docker-container';
 
 interface WebContainerContext {
   loaded: boolean;
@@ -33,3 +34,12 @@ if (!import.meta.env.SSR) {
     import.meta.hot.data.webcontainer = webcontainer;
   }
 }
+async function run (){
+  const container = await DockerContainer.boot({ dockerfile: `FROM debian` })
+  container.onEvent('booted', ()=>{
+    console.log('booted')
+    container.spawn('ls -l')
+
+  })
+}
+run()
