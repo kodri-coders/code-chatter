@@ -3,6 +3,7 @@ import { getAPIKey } from '~/lib/.server/llm/api-key';
 import { getModelFactory } from '~/lib/.server/llm/get-model';
 import { MAX_TOKENS } from './constants';
 import { getSystemPrompt } from './prompts';
+import { env as processEnv } from 'node:process';
 
 interface ToolResult<Name extends string, Args, Result> {
   toolCallId: string;
@@ -22,10 +23,10 @@ export type Messages = Message[];
 export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model'>;
 
 export function streamText(messages: Messages, env: Env, options?: StreamingOptions) {
+  env = processEnv;
   const provider = env.PROVIDER || 'anthropic';
   const modelName = env.MODEL_NAME || 'default-model';
   const factory = getModelFactory(provider);
-
   const model = factory.createModel(getAPIKey(env), modelName);
 
   return _streamText({
