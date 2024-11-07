@@ -34,12 +34,12 @@ if (!import.meta.env.SSR) {
     import.meta.hot.data.webcontainer = webcontainer;
   }
 }
-async function run (){
-  const container = await DockerContainer.boot({ dockerfile: `FROM debian` })
-  container.onEvent('booted', ()=>{
-    console.log('booted')
-    container.spawn('ls -l')
+// async function run (){
+//   const container = await DockerContainer.boot({ dockerfile: `FROM debian` })
+//   container.onEvent('booted', ()=>{
+//     console.log('booted')
+//     container.spawn('ls -l')
 
-  })
-}
-run()
+//   })
+// }
+// run()

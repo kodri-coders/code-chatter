@@ -27,6 +27,7 @@ export function streamText(messages: Messages, env: Env, options?: StreamingOpti
   const factory = getModelFactory(provider);
 
   const model = factory.createModel(getAPIKey(env), modelName);
+  console.log('model', model, getSystemPrompt());
 
   return _streamText({
     model,

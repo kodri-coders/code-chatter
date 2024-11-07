@@ -1,4 +1,4 @@
-export type ActionType = 'file' | 'patch' | 'shell';
+export type ActionType = 'file' | 'patch' | 'shell' | 'system_prompt_set';
 
 export interface BaseAction {
   content: string;

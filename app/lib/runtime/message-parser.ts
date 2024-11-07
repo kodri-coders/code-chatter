@@ -248,7 +248,9 @@ export class StreamingMessageParser {
       content: '',
     };
 
-    if (actionType === 'file') {
+    if (actionType === 'system_prompt_set'){
+      console.log({ actionAttributes })
+    } else if (actionType === 'file') {
       const filePath = this.#extractAttribute(actionTag, 'filePath') as string;
 
       if (!filePath) {
@@ -264,7 +266,6 @@ export class StreamingMessageParser {
       }
 
       (actionAttributes as FileAction).filePath = filePath;
-      console.log({ actionAttributes })
     } else if (actionType !== 'shell') {
       logger.warn(`Unknown action type '${actionType}'`);
     }
